@@ -100,6 +100,126 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     );
   }
 
+  // ── BEFORE / AFTER PANELS ───────────────────────────────────────
+
+  if (key === 'mistakes-over:2') {
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-red-400 border-b border-white/5 pb-2">
+            Before
+          </div>
+          {[
+            "...I think we agreed? Or maybe not",
+            "Someone mentioned Q3 I think",
+            "We'll figure it out later",
+          ].map((line, i) => (
+            <div key={i} className="text-[12px] text-slate-600 leading-relaxed">{line}</div>
+          ))}
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400 border-b border-white/5 pb-2">
+            After Claude
+          </div>
+          {[
+            { tag: 'decision', text: 'Launch pushed to Q3 — confirmed' },
+            { tag: 'action',   text: 'Dan: confirm budget with Finance' },
+            { tag: 'owner',    text: 'Marcus: vendor contracts this week' },
+          ].map(({ tag, text }, i) => (
+            <div key={i} className="flex items-start gap-2 bg-white/[0.02] rounded-md px-2.5 py-2 border border-white/5">
+              <span className={`text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${
+                tag === 'decision' ? 'bg-taupe-500/15 text-taupe-400' :
+                tag === 'action'   ? 'bg-indigo-500/15 text-indigo-400' :
+                                     'bg-emerald-500/15 text-emerald-400'
+              }`}>{tag}</span>
+              <span className="text-[12px] text-slate-300 leading-relaxed">{text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (key === 'your-day-60:1') {
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-red-400 border-b border-white/5 pb-2">
+            Before
+          </div>
+          {[
+            'Gmail: 47 unread, unknown priority',
+            'Slack: 12 threads, no urgency filter',
+            'Calendar: no prep loaded',
+            'Asana: 9 overdue tasks',
+            'Linear: 5 unreviewed issues',
+            'Notion: 2 pending decisions',
+          ].map((line, i) => (
+            <div key={i} className="text-[11px] text-slate-600 leading-relaxed">{line}</div>
+          ))}
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400 border-b border-white/5 pb-2">
+            Morning Briefing
+          </div>
+          {[
+            { tag: 'urgent',   text: '2 Slack threads need you today',          color: 'red' },
+            { tag: 'meeting',  text: '3 meetings · prep loaded for 2',          color: 'indigo' },
+            { tag: 'task',     text: 'Top priority: Q3 budget confirmation',    color: 'taupe' },
+            { tag: 'decision', text: 'Infra proposal — needs your sign-off',    color: 'emerald' },
+          ].map(({ tag, text, color }, i) => (
+            <div key={i} className="flex items-start gap-2 bg-white/[0.02] rounded-md px-2.5 py-2 border border-white/5">
+              <span className={`text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${
+                color === 'red'     ? 'bg-red-500/15 text-red-400' :
+                color === 'indigo'  ? 'bg-indigo-500/15 text-indigo-400' :
+                color === 'taupe'   ? 'bg-taupe-500/15 text-taupe-400' :
+                                      'bg-emerald-500/15 text-emerald-400'
+              }`}>{tag}</span>
+              <span className="text-[12px] text-slate-300 leading-relaxed">{text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (key === 'receipt-box:3') {
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-red-400 border-b border-white/5 pb-2">
+            The photo
+          </div>
+          <div className="flex flex-col gap-1.5 mt-1">
+            <div className="w-full h-20 bg-slate-800/60 rounded border border-white/5 flex items-center justify-center">
+              <span className="text-slate-600 text-[11px]">receipt_photo.jpg</span>
+            </div>
+            <div className="text-[11px] text-slate-600">Crumpled. Faded ink. Sideways.</div>
+            <div className="text-[11px] text-slate-600">You have 46 more like this.</div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400 border-b border-white/5 pb-2">
+            After Claude Vision
+          </div>
+          {[
+            { tag: 'vendor',   text: 'Home Depot' },
+            { tag: 'total',    text: '$47.32' },
+            { tag: 'date',     text: '2024-03-15' },
+            { tag: 'category', text: 'Supplies' },
+          ].map(({ tag, text }, i) => (
+            <div key={i} className="flex items-center gap-2 bg-white/[0.02] rounded-md px-2.5 py-2 border border-white/5">
+              <span className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded bg-taupe-500/15 text-taupe-400 flex-shrink-0">
+                {tag}
+              </span>
+              <span className="text-[12px] text-slate-300">{text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   // Fallback — should not be reached once all panels are defined
   return (
     <div className="flex items-center justify-center h-32 text-slate-700 text-sm">
