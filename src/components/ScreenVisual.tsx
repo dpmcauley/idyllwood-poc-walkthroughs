@@ -1,5 +1,41 @@
 'use client';
 
+type TagColor = 'taupe' | 'indigo' | 'emerald' | 'sky' | 'amber' | 'red';
+
+interface OutputRow {
+  tag: string;
+  text: string;
+  color?: TagColor;
+}
+
+function tagClass(color: TagColor = 'taupe'): string {
+  const map: Record<TagColor, string> = {
+    taupe:   'bg-taupe-500/15 text-taupe-400',
+    indigo:  'bg-indigo-500/15 text-indigo-400',
+    emerald: 'bg-emerald-500/15 text-emerald-400',
+    sky:     'bg-sky-500/15 text-sky-400',
+    amber:   'bg-amber-500/15 text-amber-400',
+    red:     'bg-red-500/15 text-red-400',
+  };
+  return map[color];
+}
+
+function OutputPanel({ label, rows }: { label: string; rows: OutputRow[] }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-slate-600 mb-1">{label}</div>
+      {rows.map(({ tag, text, color = 'taupe' }, i) => (
+        <div key={i} className="flex items-start gap-2 bg-white/[0.02] rounded-md px-3 py-2.5 border border-white/5">
+          <span className={`text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${tagClass(color)}`}>
+            {tag}
+          </span>
+          <span className="text-[12px] text-slate-300 leading-relaxed">{text}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export interface ScreenVisualProps {
   slug: string;
   screenIndex: number;
@@ -218,6 +254,138 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
         </div>
       </div>
     );
+  }
+
+  // ── OUTPUT PANELS — mistakes-over ───────────────────────────────
+
+  if (key === 'mistakes-over:1') {
+    return <OutputPanel label="Processing" rows={[
+      { tag: 'upload',  text: 'meeting_2024-03-15.mp4 — 847 MB',            color: 'sky' },
+      { tag: 'status',  text: 'Extracting transcript…',                       color: 'amber' },
+      { tag: 'queue',   text: 'Claude processing: ~40 seconds remaining',     color: 'indigo' },
+    ]} />;
+  }
+
+  if (key === 'mistakes-over:3') {
+    return <OutputPanel label="Granola MCP — speaker context added" rows={[
+      { tag: 'speaker',  text: 'Sarah Chen — Product Lead, high confidence',              color: 'sky' },
+      { tag: 'speaker',  text: 'Marcus Webb — Engineering, high confidence',              color: 'sky' },
+      { tag: 'emphasis', text: 'Marcus flagged Q3 timeline twice — marked as priority',   color: 'amber' },
+      { tag: 'tone',     text: 'Alignment reached at 41:22 — decision finalized',         color: 'emerald' },
+    ]} />;
+  }
+
+  if (key === 'mistakes-over:4') {
+    return <OutputPanel label="Slack export preview" rows={[
+      { tag: 'decision', text: 'Launch pushed to Q3 2024',                    color: 'taupe' },
+      { tag: 'action',   text: 'Dan → budget sign-off by Friday',             color: 'indigo' },
+      { tag: 'action',   text: 'Marcus → vendor contracts this week',          color: 'indigo' },
+      { tag: 'sent',     text: '#product-team — posted as thread reply',       color: 'emerald' },
+    ]} />;
+  }
+
+  if (key === 'mistakes-over:5') {
+    return <OutputPanel label="Decision ledger" rows={[
+      { tag: 'decision', text: 'Launch → Q3',                                 color: 'taupe' },
+      { tag: 'owner',    text: 'Dan McAuley',                                 color: 'sky' },
+      { tag: 'date',     text: '2024-03-15',                                  color: 'sky' },
+      { tag: 'status',   text: 'Open — budget pending',                       color: 'amber' },
+    ]} />;
+  }
+
+  if (key === 'mistakes-over:6') {
+    return <OutputPanel label="Downstream triggers fired" rows={[
+      { tag: 'crm',    text: 'Salesforce opportunity stage updated to Q3',    color: 'sky' },
+      { tag: 'linear', text: 'ENG-441 due date set to 2024-09-01',            color: 'indigo' },
+      { tag: 'notion', text: 'Decision log page updated',                     color: 'taupe' },
+      { tag: 'alert',  text: 'Finance notified of pending budget confirmation', color: 'amber' },
+    ]} />;
+  }
+
+  // ── OUTPUT PANELS — your-day-60 ─────────────────────────────────
+
+  if (key === 'your-day-60:2') {
+    return <OutputPanel label="Urgent Slack threads" rows={[
+      { tag: 'urgent', text: '#infra: prod deploy blocked — needs your approval', color: 'red' },
+      { tag: 'urgent', text: '@you: Q3 budget thread — 3 replies waiting',        color: 'red' },
+      { tag: 'score',  text: 'Urgency scored by Claude sentiment analysis',        color: 'indigo' },
+    ]} />;
+  }
+
+  if (key === 'your-day-60:3') {
+    return <OutputPanel label="Today's meetings" rows={[
+      { tag: '9:00am',  text: "Standup — prep: yesterday's Linear digest loaded",  color: 'sky' },
+      { tag: '11:00am', text: 'Q3 Planning — prep: budget doc + open decisions',   color: 'sky' },
+      { tag: '2:00pm',  text: 'Vendor call — prep: none loaded (no prior context)', color: 'amber' },
+    ]} />;
+  }
+
+  if (key === 'your-day-60:4') {
+    return <OutputPanel label="Top tasks for today" rows={[
+      { tag: 'priority', text: 'Confirm Q3 budget with Finance (overdue)',          color: 'red' },
+      { tag: 'priority', text: 'Approve infra deploy — blocks two engineers',       color: 'red' },
+      { tag: 'priority', text: 'Review Infra Proposal v2 — decision needed',        color: 'amber' },
+    ]} />;
+  }
+
+  if (key === 'your-day-60:5') {
+    return <OutputPanel label="Carried forward from yesterday" rows={[
+      { tag: 'decision', text: 'Infra proposal — you agreed to decide by today',   color: 'taupe' },
+      { tag: 'action',   text: 'Follow up with legal on vendor NDA (your item)',    color: 'indigo' },
+      { tag: 'source',   text: 'Pulled from Mistakes Over decision ledger',         color: 'sky' },
+    ]} />;
+  }
+
+  if (key === 'your-day-60:6') {
+    return <OutputPanel label="Export and interact" rows={[
+      { tag: 'export', text: 'PDF briefing — ready to download',                   color: 'sky' },
+      { tag: 'export', text: 'Slack DM — sent to yourself at 7:02am',              color: 'emerald' },
+      { tag: 'q&a',    text: 'Ask Claude: "What should I prep for the vendor call?"', color: 'indigo' },
+    ]} />;
+  }
+
+  // ── OUTPUT PANELS — receipt-box ──────────────────────────────────
+
+  if (key === 'receipt-box:1') {
+    return <OutputPanel label="Watched folder" rows={[
+      { tag: 'synced',  text: 'receipt_home_depot.jpg — ready',              color: 'emerald' },
+      { tag: 'syncing', text: 'receipt_costco_march.jpg — uploading…',       color: 'amber' },
+      { tag: 'pending', text: 'IMG_0847.jpg — queued',                       color: 'sky' },
+    ]} />;
+  }
+
+  if (key === 'receipt-box:2') {
+    return <OutputPanel label="How it works" rows={[
+      { tag: 'step 1', text: 'Snap photo with your phone camera',            color: 'sky' },
+      { tag: 'step 2', text: 'File lands in watched folder (Dropbox or local)', color: 'sky' },
+      { tag: 'step 3', text: 'Trigger fires automatically — no manual upload', color: 'emerald' },
+    ]} />;
+  }
+
+  if (key === 'receipt-box:4') {
+    return <OutputPanel label="Category rules applied" rows={[
+      { tag: 'match',    text: '"Home Depot" → Supplies (98% confidence)',    color: 'emerald' },
+      { tag: 'match',    text: '"HD" → Home Depot (fuzzy normalize)',         color: 'emerald' },
+      { tag: 'rule',     text: 'Amount > $200 at hardware stores → Capital Expense', color: 'taupe' },
+      { tag: 'fallback', text: 'Unknown vendors flagged for manual review',   color: 'amber' },
+    ]} />;
+  }
+
+  if (key === 'receipt-box:5') {
+    return <OutputPanel label="Google Sheet — new row added" rows={[
+      { tag: 'vendor',   text: 'Home Depot',    color: 'sky' },
+      { tag: 'amount',   text: '$47.32',         color: 'taupe' },
+      { tag: 'date',     text: '2024-03-15',     color: 'sky' },
+      { tag: 'category', text: 'Supplies',       color: 'emerald' },
+    ]} />;
+  }
+
+  if (key === 'receipt-box:6') {
+    return <OutputPanel label="Ready to export" rows={[
+      { tag: 'csv',        text: 'expenses_2024_q1.csv — 47 rows',           color: 'sky' },
+      { tag: 'quickbooks', text: 'IIF format — ready to import',             color: 'emerald' },
+      { tag: 'pdf',        text: 'Expense report — formatted for accountant', color: 'taupe' },
+    ]} />;
   }
 
   // Fallback — should not be reached once all panels are defined
