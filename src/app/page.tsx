@@ -20,7 +20,7 @@ const containerVariants = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
 };
 
 const cardVariants = {
@@ -28,7 +28,7 @@ const cardVariants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, ease: 'easeOut', delay: i * 0.1 },
+    transition: { duration: 0.45, ease: 'easeOut' as const, delay: i * 0.1 },
   }),
 };
 
