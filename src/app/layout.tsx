@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: "Claude Workflows | Idyllwood Lab",
   description: "See real Claude automation workflows in action — from meeting chaos to morning briefings to expense tracking.",
   keywords: ["Claude", "AI automation", "workflow", "PoC", "enterprise"],
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
