@@ -45,7 +45,8 @@ src/
     layout.tsx                  # Header + GA4 setup
     globals.css                 # Tailwind v4 @theme tokens + @layer base reset
   components/
-    Header.tsx                  # Sticky header — "The Lab" left, "All Workflows →" right (demo pages only)
+    Header.tsx                  # Sticky header — logomark centre-left, "← The Lab" far left, "All Workflows →" right (demo pages only)
+    Logo.tsx                    # Idyllwood Lab logomark (Terminal icon + wordmark) — links to idyllwoodlab.com
     PoCStepper.tsx              # 7-screen stepper — progress bar, slide transitions, sticky footer nav
     ScreenVisual.tsx            # 21 visual panels keyed by slug:screenIndex
     PoCCard.tsx                 # Gallery card with hover arrow
