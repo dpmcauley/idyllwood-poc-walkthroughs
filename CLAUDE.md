@@ -116,7 +116,7 @@ The Hub has a `useEffect` on mount to scroll to `#ai-consulting` on load (fixes 
 ## Analytics (GA4)
 
 ```bash
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX   # Set in Vercel env vars after deploy
+NEXT_PUBLIC_GA_ID=G-06NWSWEHV3   # Set in Vercel env vars on deploy
 ```
 
 ---
