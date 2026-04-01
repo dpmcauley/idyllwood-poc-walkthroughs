@@ -29,7 +29,7 @@ export const WALKTHROUGHS: Record<string, PoC> = {
       {
         tier1: "Have you ever walked out of a meeting unsure what actually got decided?",
         tier2: "Recording, transcript extraction, and intent parsing via Claude.",
-        content: "The problem: You have a 45-minute meeting recording, but no clear action items or decisions.",
+        content: "Things got decided. Owners were named. Nobody wrote it down — and by tomorrow, half the room will remember it differently.",
       },
       {
         tier1: "Upload happens once, decisions appear instantly.",
@@ -88,7 +88,7 @@ export const WALKTHROUGHS: Record<string, PoC> = {
         content: "Your briefing prioritizes urgent messages and action items from Slack conversations.",
       },
       {
-        tier1: "Your 3 key meetings today, with prep notes if you generated them yesterday.",
+        tier1: "Your 3 key meetings today — with prep notes already loaded.",
         tier2: "Google Calendar API, meeting context from participant emails + prep documents.",
         content: "Calendar section shows your day\'s key meetings with pre-loaded prep and agendas.",
       },

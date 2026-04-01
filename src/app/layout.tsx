@@ -4,8 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
-  title: "PoC Walkthroughs | Idyllwood Lab",
-  description: "Interactive walkthroughs demonstrating real-world Claude Cowork automation workflows for enterprise teams.",
+  title: "Claude Workflows | Idyllwood Lab",
+  description: "See real Claude automation workflows in action — from meeting chaos to morning briefings to expense tracking.",
   keywords: ["Claude", "AI automation", "workflow", "PoC", "enterprise"],
 };
 
@@ -14,7 +14,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || '';
+  const rawGaId = process.env.NEXT_PUBLIC_GA_ID || '';
+  const gaId = /^G-[A-Z0-9]+$/.test(rawGaId) ? rawGaId : '';
 
   return (
     <html lang="en" className="antialiased">

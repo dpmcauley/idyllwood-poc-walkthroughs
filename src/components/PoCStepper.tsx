@@ -112,7 +112,7 @@ export function PoCStepper({ poc }: PoCStepperProps) {
                       rel="noopener noreferrer"
                       className="px-8 py-3 rounded-lg bg-gradient-to-r from-taupe-500 to-taupe-400 text-slate-950 font-semibold text-[15px] hover:opacity-90 transition-opacity shadow-lg shadow-taupe-900/20"
                     >
-                      Let&apos;s talk.
+                      Build this for my team
                     </a>
                   </motion.div>
                 )}

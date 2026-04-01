@@ -1,35 +1,35 @@
-# Idyllwood Lab — PoC Walkthroughs
+# Idyllwood Lab — Claude Workflows
 
-**Subdomain:** `walkthroughs.idyllwoodlab.com`  
-**Status:** In Development  
-**Stack:** Next.js App Router + TypeScript + Tailwind CSS  
-**Deployment:** Vercel (separate project from Hub)  
-**Database:** None (frontend-only)  
+**Subdomain:** `walkthroughs.idyllwoodlab.com`
+**Status:** Built locally, not yet deployed
+**Stack:** Next.js 16 App Router + TypeScript + Tailwind CSS v4 + Framer Motion 12
+**Deployment:** Vercel (separate project from Hub)
+**Database:** None (frontend-only)
 
 ---
 
 ## Project Purpose
 
-Interactive HTML walkthroughs demonstrating real-world Claude Cowork automation workflows. Three proof-of-concept scenarios targeting dual audiences:
-- **Tier 1:** Non-technical professionals (business users, decision-makers)
-- **Tier 2:** Hands-on AI practitioners (engineers, automation enthusiasts)
+Interactive walkthroughs demonstrating real Claude automation workflows. Three scenarios, each a 7-screen narrative stepper with emotional hooks, before/after visuals, and a direct CTA to consulting engagement.
 
-Each PoC is a 7-screen walkthrough with emotional hooks, transformations, and CTAs to consulting engagement.
+**Audiences:**
+- Non-technical decision-makers (tier1 — hero copy, Playfair Display)
+- Hands-on practitioners (tier2 — small tech pill, monospace)
 
 ---
 
-## PoCs Included
+## Workflows Included
 
 1. **Mistakes Over, Now What?** (`/demos/mistakes-over`)
-   - Transform meeting transcripts into actionable summaries
+   - Meeting transcript → structured decisions, action items, owner assignments
    - MCP: Granola MCP, Supabase, decision ledger
 
 2. **Your Day in 60 Seconds** (`/demos/your-day-60`)
-   - Consolidate 6 apps into one morning briefing
+   - 6 disconnected apps → one prioritized morning briefing
    - MCP: Dispatch, Gmail, Slack, Asana, Notion
 
 3. **Receipt Box** (`/demos/receipt-box`)
-   - Turn receipt photos into spreadsheet entries
+   - Receipt photos → Google Sheet rows, auto-categorized
    - MCP: Vision API, Google Sheets, expense categorization
 
 ---
@@ -40,80 +40,119 @@ Each PoC is a 7-screen walkthrough with emotional hooks, transformations, and CT
 ```
 src/
   app/
-    page.tsx                    # Gallery landing (all 3 PoCs as cards)
-    demos/[slug]/page.tsx       # Individual PoC walkthrough
+    page.tsx                    # Gallery landing — animated cards, Claude mark badge
+    demos/[slug]/page.tsx       # Individual walkthrough (SSG via generateStaticParams)
     layout.tsx                  # Header + GA4 setup
-    globals.css                 # Brand styles + glassmorphism
+    globals.css                 # Tailwind v4 @theme tokens + @layer base reset
   components/
-    Header.tsx                  # Sticky header with "The Lab" back link
-    PoCStepper.tsx              # Narrative stepper — hook, visual, pill, CTA
-    ScreenVisual.tsx            # 21 visual panels keyed by slug + screenIndex
-    PoCCard.tsx                 # Gallery card component
+    Header.tsx                  # Sticky header — "The Lab" left, "All Workflows →" right (demo pages only)
+    PoCStepper.tsx              # 7-screen stepper — progress bar, slide transitions, sticky footer nav
+    ScreenVisual.tsx            # 21 visual panels keyed by slug:screenIndex
+    PoCCard.tsx                 # Gallery card with hover arrow
   data/
-    walkthroughs.ts             # PoC data model (config-driven)
+    walkthroughs.ts             # All PoC config — screens, copy, MCP labels
 ```
 
-### Data Model
+### Data Model (`walkthroughs.ts`)
+Each PoC has: `slug`, `title`, `emotionalHook`, `transformation`, `mcp`, `description`, `screens[]`
 
-All three PoCs are defined in `src/data/walkthroughs.ts` as a config object. This design allows easy addition of 4th/5th PoCs without code changes—just extend the object.
+Each screen has:
+- `tier1` — hero hook headline (Playfair Display, 42px)
+- `content` — sub-copy (slate-400, 15px)
+- `tier2` — tech pill text (shown only if present)
+
+### Visual Panels (`ScreenVisual.tsx`)
+Keyed by `slug:screenIndex` composite. Three types:
+- **Chaos** (screen 0) — raw messy state before automation
+- **Before/After** (transformation screens) — split grid, dim left / bright right
+- **Output** (all other screens) — `OutputPanel` component with colored tag badges
+
+Tag badge colors: `taupe` | `indigo` | `emerald` | `sky` | `amber` | `red`
+
+---
+
+## Tailwind v4 — Critical Notes
+
+This project uses **Tailwind CSS v4**. v4 is meaningfully different from v3:
+
+- **No `tailwind.config.js`** — v4 ignores it. Custom tokens go in `globals.css` inside `@theme {}`
+- **Import syntax** — `@import "tailwindcss"` not `@tailwind base/components/utilities`
+- **CSS reset must be in `@layer base`** — unlayered `* { margin: 0 }` outranks utility classes and breaks `mx-auto`
+- **PostCSS plugin** — `@tailwindcss/postcss` in `postcss.config.mjs`, not `tailwindcss`
+
+Current `globals.css` structure:
+```css
+@import url('https://fonts.googleapis.com/...');
+@import "tailwindcss";
+@theme { --color-slate-850, --color-taupe-400, --color-taupe-500, --font-display, --font-sans }
+@layer components { .glass-panel, .gradient-text }
+@layer base { *, html, body }
+```
+
+If styles break: `rm -rf .next && npm run dev` — Turbopack caches aggressively.
 
 ---
 
 ## Routing
 
-| Route | Component | Purpose |
-|---|---|---|
-| `/` | `page.tsx` | Gallery landing page (all 3 PoC cards) |
-| `/demos/mistakes-over` | `[slug]/page.tsx` | Mistakes Over walkthrough |
-| `/demos/your-day-60` | `[slug]/page.tsx` | Your Day in 60 Seconds walkthrough |
-| `/demos/receipt-box` | `[slug]/page.tsx` | Receipt Box walkthrough |
+| Route | Purpose |
+|---|---|
+| `/` | Gallery landing (all 3 workflow cards) |
+| `/demos/mistakes-over` | Mistakes Over walkthrough |
+| `/demos/your-day-60` | Your Day in 60 Seconds walkthrough |
+| `/demos/receipt-box` | Receipt Box walkthrough |
+
+---
+
+## CTA Flow
+
+Last screen → "Build this for my team" → `https://idyllwoodlab.com/#ai-consulting`
+
+The Hub has a `useEffect` on mount to scroll to `#ai-consulting` on load (fixes Vite SPA hash timing).
 
 ---
 
 ## Analytics (GA4)
 
-Tracking configured with environment variable:
 ```bash
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX   # Set in Vercel env vars after deploy
 ```
-
-**Events tracked:**
-- `screen_view`: User navigates to a new screen (scaffolded, fires when gtag is present)
 
 ---
 
-## Getting Started
+## Local Development
 
-### Local Development
 ```bash
 npm install
 npm run dev
-# Open http://localhost:3000
-```
-
-### Environment Variables
-```bash
-cp .env.local.example .env.local
-# Edit with your GA4 ID
-```
-
-### Deployment to Vercel
-```bash
-vercel deploy
+# http://localhost:3000
 ```
 
 ---
 
-## Next Steps (TODO)
+## Deployment (TODO)
 
-1. **Subdomain Deployment** — Deploy to `walkthroughs.idyllwoodlab.com` via Vercel
-2. **Hub Integration** — Add PoC Walkthroughs card in "The Lab" section on idyllwoodlab.com
-3. **GA4 Tracking ID** — Set `NEXT_PUBLIC_GA_ID` in Vercel env vars once deployed
-4. **Content Polish** — Refine tier1/tier2 copy in `walkthroughs.ts` per PoC
+1. `vercel deploy` — creates project at Vercel
+2. Set custom domain `walkthroughs.idyllwoodlab.com` in Vercel project settings
+3. Add CNAME at Namecheap: `walkthroughs` → `cname.vercel-dns.com`
+4. Set `NEXT_PUBLIC_GA_ID` env var in Vercel dashboard
+5. Update Hub `constants.ts` link from `https://walkthroughs.idyllwoodlab.com` (already done — goes live automatically once subdomain resolves)
+
+---
+
+## Outstanding TODOs
+
+1. **Deploy to Vercel** — not yet deployed, localhost only
+2. **Transcript attribution fix** — `mistakes-over` transcript doesn't establish speaker ownership clearly enough to justify named action items in the output. Rewrite 4 lines in `walkthroughs.ts` so speakers explicitly claim tasks.
+3. **GA4 ID** — set after deploy
+
+---
 
 ## Design Notes
 
-- **Stepper layout:** `tier1` is the hero hook (Playfair Display, large). `content` is sub-copy. `tier2` is demoted to a small tech pill.
-- **Visual panels:** All 21 screens have hand-crafted visuals in `ScreenVisual.tsx` — keyed by `slug:screenIndex`. Three types: chaos (screen 0), before/after (transformation moment), output (downstream steps).
-- **CTA:** Last screen shows "Let's talk." linking directly to `idyllwoodlab.com/#ai-consulting`. No modal, no form.
-- **Transitions:** Framer Motion slide+fade with directional awareness (forward/backward).
+- **Header:** Context-aware — gallery shows only "The Lab" back link; demo pages add "All Workflows →" top right
+- **Title:** "Claude Workflows" (not "PoC Walkthroughs" — jargon)
+- **CTA copy:** "Build this for my team" (not "Let's talk.")
+- **Claude mark:** Real SVG from Wikimedia Commons (CC0). Animated — slow spin in badge, pulse in CTA section.
+- **Transitions:** Framer Motion `AnimatePresence mode="wait"` with directional `custom` prop (±40px x offset)
+- **Font hierarchy:** tier1 = Playfair Display bold; content = Inter 15px slate-400; tier2 = Inter 11px monospace pill

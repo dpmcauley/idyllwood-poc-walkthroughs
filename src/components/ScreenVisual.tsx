@@ -23,13 +23,13 @@ function tagClass(color: TagColor = 'taupe'): string {
 function OutputPanel({ label, rows }: { label: string; rows: OutputRow[] }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-slate-600 mb-1">{label}</div>
+      <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 mb-1">{label}</div>
       {rows.map(({ tag, text, color = 'taupe' }, i) => (
         <div key={i} className="flex items-start gap-2 bg-white/[0.02] rounded-md px-3 py-2.5 border border-white/5">
-          <span className={`text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${tagClass(color)}`}>
+          <span className={`text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${tagClass(color)}`}>
             {tag}
           </span>
-          <span className="text-[12px] text-slate-300 leading-relaxed">{text}</span>
+          <span className="text-sm text-slate-200 leading-relaxed">{text}</span>
         </div>
       ))}
     </div>
@@ -49,26 +49,26 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
   if (key === 'mistakes-over:0') {
     return (
       <div className="flex flex-col gap-3">
-        <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-slate-600 mb-1">
+        <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 mb-1">
           Your raw transcript
         </div>
         {[
-          { speaker: 'Sarah', text: '...okay so I think we agreed to push the launch, right? Or was that just a suggestion?', dim: true },
-          { speaker: 'Marcus', text: "Yeah I'll follow up on that. Or maybe Dan will. We'll figure it out.", dim: false },
-          { speaker: 'Dan', text: 'Sure, sure. And the budget thing — did we decide anything there?', dim: true },
-          { speaker: 'Sarah', text: "I think so. Someone mentioned Q3 but I don't remember who.", dim: true },
+          { speaker: 'Sarah', text: "Okay so we're pushing the launch to Q3 — that's decided, right?", dim: true },
+          { speaker: 'Marcus', text: "Yes. And I'll own the vendor contracts — I'll have a draft by end of week.", dim: false },
+          { speaker: 'Dan', text: "Got it. I'll confirm the budget with Finance before Friday.", dim: true },
+          { speaker: 'Sarah', text: "Perfect. Someone write this down so we don't lose it.", dim: true },
         ].map(({ speaker, text, dim }, i) => (
           <div key={i} className="flex gap-3 items-start">
-            <span className="text-[11px] font-semibold text-taupe-500 uppercase tracking-[0.5px] whitespace-nowrap pt-0.5 min-w-[52px]">
+            <span className="text-xs font-semibold text-taupe-400 uppercase tracking-[0.5px] whitespace-nowrap pt-0.5 min-w-[52px]">
               {speaker}
             </span>
-            <span className={`text-[13px] leading-relaxed ${dim ? 'text-slate-600' : 'text-slate-300'}`}>
+            <span className={`text-sm leading-relaxed ${dim ? 'text-slate-400' : 'text-slate-200'}`}>
               {text}
             </span>
           </div>
         ))}
-        <div className="border-t border-white/5 mt-1 pt-3 text-[12px] text-slate-500 italic">
-          Nobody owns anything. Nothing is decided. The meeting is over.
+        <div className="border-t border-white/5 mt-1 pt-3 text-sm text-slate-400 italic">
+          Clear decisions. Named owners. No one wrote it down.
         </div>
       </div>
     );
@@ -77,7 +77,7 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
   if (key === 'your-day-60:0') {
     return (
       <div className="flex flex-col gap-3">
-        <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-slate-600 mb-1">
+        <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 mb-1">
           Your morning, right now
         </div>
         {[
@@ -90,13 +90,13 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
         ].map(({ app, badge, snippet }, i) => (
           <div key={i} className="flex items-center gap-3">
             <div className="flex items-center gap-2 min-w-[80px]">
-              <span className="text-[12px] font-semibold text-slate-400">{app}</span>
+              <span className="text-sm font-semibold text-slate-300">{app}</span>
               <span className="text-[10px] font-bold bg-red-500/20 text-red-400 rounded-full px-1.5 py-0.5 leading-none">{badge}</span>
             </div>
-            <span className="text-[12px] text-slate-600 truncate">{snippet}</span>
+            <span className="text-sm text-slate-400 truncate">{snippet}</span>
           </div>
         ))}
-        <div className="border-t border-white/5 mt-1 pt-3 text-[12px] text-slate-500 italic">
+        <div className="border-t border-white/5 mt-1 pt-3 text-sm text-slate-400 italic">
           Six tabs. No signal. Coffee is getting cold.
         </div>
       </div>
@@ -113,25 +113,25 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
               className="w-16 h-20 rounded bg-slate-800/60 border border-white/5 flex items-end justify-center pb-2"
               style={{ transform: `rotate(${(i % 3 - 1) * 3}deg)` }}
             >
-              <span className="text-[9px] text-slate-600">IMG_{String(i + 1).padStart(3, '0')}</span>
+              <span className="text-[9px] text-slate-500">IMG_{String(i + 1).padStart(3, '0')}</span>
             </div>
           ))}
         </div>
         <div className="flex gap-6 text-center">
           <div>
             <div className="text-2xl font-bold text-white">47</div>
-            <div className="text-[10px] text-slate-600 uppercase tracking-wider">Photos</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-wider">Photos</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-red-400">0</div>
-            <div className="text-[10px] text-slate-600 uppercase tracking-wider">Categorized</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-wider">Categorized</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-amber-400">6w</div>
-            <div className="text-[10px] text-slate-600 uppercase tracking-wider">To tax deadline</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-wider">To tax deadline</div>
           </div>
         </div>
-        <div className="text-[12px] text-slate-500 italic">You have been meaning to do this for three months.</div>
+        <div className="text-sm text-slate-400 italic">You have been meaning to do this for three months.</div>
       </div>
     );
   }
@@ -142,7 +142,7 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     return (
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-red-400 border-b border-white/5 pb-2">
+          <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 border-b border-white/5 pb-2">
             Before
           </div>
           {[
@@ -150,11 +150,11 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
             "Someone mentioned Q3 I think",
             "We'll figure it out later",
           ].map((line, i) => (
-            <div key={i} className="text-[12px] text-slate-600 leading-relaxed">{line}</div>
+            <div key={i} className="text-sm text-slate-400 leading-relaxed">{line}</div>
           ))}
         </div>
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400 border-b border-white/5 pb-2">
+          <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-taupe-400 border-b border-white/5 pb-2">
             After Claude
           </div>
           {[
@@ -163,12 +163,12 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
             { tag: 'owner',    text: 'Marcus: vendor contracts this week' },
           ].map(({ tag, text }, i) => (
             <div key={i} className="flex items-start gap-2 bg-white/[0.02] rounded-md px-2.5 py-2 border border-white/5">
-              <span className={`text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${
+              <span className={`text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${
                 tag === 'decision' ? 'bg-taupe-500/15 text-taupe-400' :
                 tag === 'action'   ? 'bg-indigo-500/15 text-indigo-400' :
                                      'bg-emerald-500/15 text-emerald-400'
               }`}>{tag}</span>
-              <span className="text-[12px] text-slate-300 leading-relaxed">{text}</span>
+              <span className="text-sm text-slate-200 leading-relaxed">{text}</span>
             </div>
           ))}
         </div>
@@ -180,7 +180,7 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     return (
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-red-400 border-b border-white/5 pb-2">
+          <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 border-b border-white/5 pb-2">
             Before
           </div>
           {[
@@ -191,11 +191,11 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
             'Linear: 5 unreviewed issues',
             'Notion: 2 pending decisions',
           ].map((line, i) => (
-            <div key={i} className="text-[11px] text-slate-600 leading-relaxed">{line}</div>
+            <div key={i} className="text-sm text-slate-400 leading-relaxed">{line}</div>
           ))}
         </div>
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400 border-b border-white/5 pb-2">
+          <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-taupe-400 border-b border-white/5 pb-2">
             Morning Briefing
           </div>
           {[
@@ -205,13 +205,13 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
             { tag: 'decision', text: 'Infra proposal — needs your sign-off',    color: 'emerald' },
           ].map(({ tag, text, color }, i) => (
             <div key={i} className="flex items-start gap-2 bg-white/[0.02] rounded-md px-2.5 py-2 border border-white/5">
-              <span className={`text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${
+              <span className={`text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${
                 color === 'red'     ? 'bg-red-500/15 text-red-400' :
                 color === 'indigo'  ? 'bg-indigo-500/15 text-indigo-400' :
                 color === 'taupe'   ? 'bg-taupe-500/15 text-taupe-400' :
                                       'bg-emerald-500/15 text-emerald-400'
               }`}>{tag}</span>
-              <span className="text-[12px] text-slate-300 leading-relaxed">{text}</span>
+              <span className="text-sm text-slate-200 leading-relaxed">{text}</span>
             </div>
           ))}
         </div>
@@ -223,19 +223,19 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     return (
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-red-400 border-b border-white/5 pb-2">
+          <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 border-b border-white/5 pb-2">
             The photo
           </div>
           <div className="flex flex-col gap-1.5 mt-1">
             <div className="w-full h-20 bg-slate-800/60 rounded border border-white/5 flex items-center justify-center">
-              <span className="text-slate-600 text-[11px]">receipt_photo.jpg</span>
+              <span className="text-slate-400 text-xs">receipt_photo.jpg</span>
             </div>
-            <div className="text-[11px] text-slate-600">Crumpled. Faded ink. Sideways.</div>
-            <div className="text-[11px] text-slate-600">You have 46 more like this.</div>
+            <div className="text-[11px] text-slate-500">Crumpled. Faded ink. Sideways.</div>
+            <div className="text-[11px] text-slate-500">You have 46 more like this.</div>
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400 border-b border-white/5 pb-2">
+          <div className="text-[11px] font-bold uppercase tracking-[1.5px] text-taupe-400 border-b border-white/5 pb-2">
             After Claude Vision
           </div>
           {[
