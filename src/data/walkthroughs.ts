@@ -124,14 +124,9 @@ export const WALKTHROUGHS: Record<string, PoC> = {
         content: "The problem: Receipt data entry is tedious. You avoid it. Taxes suffer.",
       },
       {
-        tier1: "Create a folder on your phone or desktop. Drop receipts in it.",
-        tier2: "Folder watcher via Node.js or Zapier, cloud storage sync trigger.",
-        content: "Set up a watched folder or Dropbox integration. Receipts auto-upload as you collect them.",
-      },
-      {
-        tier1: "Snap a photo. Drop it in the folder. Walk away.",
-        tier2: "File watcher triggers Lambda or Cloud Function on file upload.",
-        content: "Your camera roll is now your expense tracker. No manual uploads needed.",
+        tier1: "Snap a photo. Drop it in one folder. That\'s the entire workflow.",
+        tier2: "Folder watcher via Node.js or Zapier triggers a Lambda on each new file. Works from phone, desktop, or Dropbox.",
+        content: "Set up a watched folder once. From there, just drop receipts in as you go — from your camera roll, desktop, or cloud sync.",
       },
       {
         tier1: "Claude Vision reads the receipt: vendor, amount, date, items.",

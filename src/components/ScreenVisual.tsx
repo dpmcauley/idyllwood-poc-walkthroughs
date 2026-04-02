@@ -219,7 +219,7 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     );
   }
 
-  if (key === 'receipt-box:3') {
+  if (key === 'receipt-box:2') {
     return (
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
@@ -347,22 +347,14 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
   // ── OUTPUT PANELS — receipt-box ──────────────────────────────────
 
   if (key === 'receipt-box:1') {
-    return <OutputPanel label="Watched folder" rows={[
-      { tag: 'synced',  text: 'receipt_home_depot.jpg — ready',              color: 'emerald' },
-      { tag: 'syncing', text: 'receipt_costco_march.jpg — uploading…',       color: 'amber' },
-      { tag: 'pending', text: 'IMG_0847.jpg — queued',                       color: 'sky' },
-    ]} />;
-  }
-
-  if (key === 'receipt-box:2') {
     return <OutputPanel label="How it works" rows={[
-      { tag: 'step 1', text: 'Snap photo with your phone camera',            color: 'sky' },
+      { tag: 'step 1', text: 'Snap photo with your phone camera',               color: 'sky' },
       { tag: 'step 2', text: 'File lands in watched folder (Dropbox or local)', color: 'sky' },
-      { tag: 'step 3', text: 'Trigger fires automatically — no manual upload', color: 'emerald' },
+      { tag: 'step 3', text: 'Trigger fires automatically — no manual upload',  color: 'emerald' },
     ]} />;
   }
 
-  if (key === 'receipt-box:4') {
+  if (key === 'receipt-box:3') {
     return <OutputPanel label="Category rules applied" rows={[
       { tag: 'match',    text: '"Home Depot" → Supplies (98% confidence)',    color: 'emerald' },
       { tag: 'match',    text: '"HD" → Home Depot (fuzzy normalize)',         color: 'emerald' },
@@ -371,7 +363,7 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     ]} />;
   }
 
-  if (key === 'receipt-box:5') {
+  if (key === 'receipt-box:4') {
     return <OutputPanel label="Google Sheet — new row added" rows={[
       { tag: 'vendor',   text: 'Home Depot',    color: 'sky' },
       { tag: 'amount',   text: '$47.32',         color: 'taupe' },
@@ -380,7 +372,7 @@ export function ScreenVisual({ slug, screenIndex }: ScreenVisualProps) {
     ]} />;
   }
 
-  if (key === 'receipt-box:6') {
+  if (key === 'receipt-box:5') {
     return <OutputPanel label="Ready to export" rows={[
       { tag: 'csv',        text: 'expenses_2024_q1.csv — 47 rows',           color: 'sky' },
       { tag: 'quickbooks', text: 'IIF format — ready to import',             color: 'emerald' },
